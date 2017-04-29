@@ -26,6 +26,7 @@ LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
 include $(BUILD_STATIC_LIBRARY)
 
+include $(CLEAR_VARS)
 ifeq ($(strip $(BOARD_CHARGER_ENABLE_SUSPEND)),true)
 LOCAL_CFLAGS += -DCHARGER_ENABLE_SUSPEND
 LOCAL_SHARED_LIBRARIES += libsuspend
@@ -37,7 +38,7 @@ LOCAL_SRC_FILES := \
     BatteryPropertiesRegistrar.cpp \
 
 LOCAL_MODULE := libhealthd_internal
-LOCAL_C_INCLUDES := bootable/recovery
+LOCAL_C_INCLUDES := $(call project-path-for,recovery)
 LOCAL_EXPORT_C_INCLUDE_DIRS := \
     $(LOCAL_PATH) \
     $(LOCAL_PATH)/include \
@@ -57,7 +58,6 @@ LOCAL_STATIC_LIBRARIES := \
     libc \
 
 include $(BUILD_STATIC_LIBRARY)
-
 
 include $(CLEAR_VARS)
 
@@ -104,7 +104,8 @@ endif
 ifneq ($(BOARD_PERIODIC_CHORES_INTERVAL_SLOW),)
 LOCAL_CFLAGS += -DBOARD_PERIODIC_CHORES_INTERVAL_SLOW=$(BOARD_PERIODIC_CHORES_INTERVAL_SLOW)
 endif
-LOCAL_C_INCLUDES := bootable/recovery
+
+LOCAL_C_INCLUDES := $(call project-path-for,recovery)
 
 LOCAL_STATIC_LIBRARIES := \
     libhealthd_internal \
